@@ -1,0 +1,80 @@
+services:
+  phpfpm:
+    depends_on:
+      - developers-italia-api-db
+
+  crawler:
+    profiles: ["cli-only"]
+    image: italia/publiccode-crawler
+    command: publiccode-crawler crawl /app/publishers.yml
+    env_file:
+      - ./.env
+      - ./.env.local
+
+    environment:
+      API_BASEURL: "http://developers-italia-api:3000/v1"
+      API_BEARER_TOKEN: "v2.local.TwwHUQEi8hr2Eo881_Bs5vK9dHOR5BgEU24QRf-U7VmUwI1yOEA6mFT0EsXioMkFT_T-jjrtIJ_Nv8f6hR6ifJXUOuzWEkm9Ijq1mqSjQatD3aDqKMyjjBA"
+      CRAWLER_DATADIR: data
+    networks:
+      - app
+    depends_on:
+      - developers-italia-api
+    volumes:
+      - .:/app
+
+  node:
+    image: node:18
+    networks:
+      - app
+    volumes:
+      - .:/app:delegated
+    working_dir: /app
+
+  developers-italia-api:
+    image: ghcr.io/italia/developers-italia-api:main
+    networks:
+      - app
+    depends_on:
+      - developers-italia-api-db
+    env_file:
+      - ./.env
+      - ./.env.local
+    environment:
+      DATABASE_DSN: "host=developers-italia-api-db user=postgres password=postgres dbname=postgres port=5432"
+      ENVIRONMENT: "${API_ENVIRONMENT:-local}"
+      PASETO_KEY: "dGVzdC1wYXNldG8ta2V5LWRvbnQtdXNlLWluLXByb2Q="
+    ports:
+      - 3000
+
+  developers-italia-api-db:
+    image: postgres:14.3-alpine
+    networks:
+      - app
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    # volumes:
+    #   - ./docker/db/data:/var/lib/postgresql/data:rw
+
+    # ports:
+    #   - 5432
+
+# ###> doctrine/doctrine-bundle ###
+#   database:
+#     image: postgres:${POSTGRES_VERSION:-15}-alpine
+#     environment:
+#       POSTGRES_DB: ${POSTGRES_DB:-app}
+#       # You should definitely change the password in production
+#       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+#       POSTGRES_USER: ${POSTGRES_USER:-app}
+#     volumes:
+#       - database_data:/var/lib/postgresql/data:rw
+#       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+#       # - ./docker/db/data:/var/lib/postgresql/data:rw
+# ###< doctrine/doctrine-bundle ###
+
+# volumes:
+# ###> doctrine/doctrine-bundle ###
+#   database_data:
+# ###< doctrine/doctrine-bundle ###

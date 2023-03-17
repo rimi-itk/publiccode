@@ -1,0 +1,6 @@
+- id: 'example'
+  name: example
+  orgs:
+    - https://github.com/example
+  repos:
+    - https://github.com/example/test

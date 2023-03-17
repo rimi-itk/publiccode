@@ -1,3 +1,6 @@
+.idea
+node_modules
+publishers.yml
 
 ###> symfony/framework-bundle ###
 /.env.local
@@ -8,3 +11,13 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###
