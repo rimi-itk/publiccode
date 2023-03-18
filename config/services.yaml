@@ -22,3 +22,8 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Controller\Admin\CrawlerConfigurationController:
+        arguments:
+            $options:
+                crawler_publishers_file: '%kernel.project_dir%/%env(CRAWLER_PUBLISHERS_FILE)%'

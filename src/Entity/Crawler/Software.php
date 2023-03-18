@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Crawler;
 
-use App\Repository\SoftwareRepository;
+use App\Repository\Crawler\SoftwareRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Yaml\Yaml;
 
-#[ORM\Entity(repositoryClass: SoftwareRepository::class)]
+#[ORM\Entity(repositoryClass: SoftwareRepository::class, readOnly: true)]
+#[ORM\Table(name: 'software')]
 class Software
 {
     #[ORM\Id]
@@ -28,7 +29,7 @@ class Software
     #[ORM\Column(name: 'created_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[ORM\Column(name: 'updated_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?Uuid

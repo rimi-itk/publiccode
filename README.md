@@ -19,8 +19,21 @@ GITHUB_TOKEN=""
 Copy `publishers.dist.yml` to `publishers.yml` and edit.
 
 ```shell
-docker compose run crawler
+docker compose run --rm crawler
 ```
+
+## Crawler entities
+
+Readonly entities, e.g. `App\Entity\Crawler\Software`, are created for the
+`developers-italia-api-db` database.
+
+Use
+
+```shell
+docker compose exec developers-italia-api-db pg_dump --dbname="host=developers-italia-api-db user=postgres password=postgres dbname=postgres port=5432" --schema-only --no-privileges --section=pre-data
+```
+
+to show the database structure when building or updating the entities.
 
 ## API
 
@@ -46,4 +59,10 @@ docker compose run --rm node yarn coding-standards-check
 
 ```shell
 docker compose run --rm node yarn coding-standards-apply
+```
+
+## Production deployment
+
+```shell
+docker compose --env-file .env.docker.local --file docker-compose.server.yml --file docker-compose.override.yml up --detach --build
 ```
