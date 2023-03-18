@@ -14,7 +14,7 @@ services:
 
     environment:
       API_BASEURL: "http://developers-italia-api:3000/v1"
-      API_BEARER_TOKEN: "v2.local.TwwHUQEi8hr2Eo881_Bs5vK9dHOR5BgEU24QRf-U7VmUwI1yOEA6mFT0EsXioMkFT_T-jjrtIJ_Nv8f6hR6ifJXUOuzWEkm9Ijq1mqSjQatD3aDqKMyjjBA"
+      # API_BEARER_TOKEN: (set in .env.local)
       CRAWLER_DATADIR: data
     networks:
       - app
@@ -44,7 +44,7 @@ services:
     environment:
       DATABASE_DSN: "host=developers-italia-api-db user=postgres password=postgres dbname=postgres port=5432"
       ENVIRONMENT: "${API_ENVIRONMENT:-local}"
-      PASETO_KEY: "dGVzdC1wYXNldG8ta2V5LWRvbnQtdXNlLWluLXByb2Q="
+      # PASETO_KEY: (set in .env.local)
     ports:
       - 3000
 

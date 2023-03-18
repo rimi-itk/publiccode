@@ -2,7 +2,7 @@
 
 ```shell
 docker compose pull
-docker compose up --detach --build
+docker compose up --build --detach
 docker compose exec phpfpm composer install
 
 open "http://$(docker compose port nginx 8080)/admin"
@@ -16,7 +16,18 @@ Create and edit `.env.local` and set your GitHub API token:
 GITHUB_TOKEN=""
 ```
 
-Copy `publishers.dist.yml` to `publishers.yml` and edit.
+Generate a couple of required environment variables, `API_BEARER_TOKEN, and
+`PASETO_KEY`, by running
+
+```shell
+docker compose exec phpfpm bin/console app:paseto
+```
+
+and insert the variables into `.env.local`.
+
+Copy `publishers.dist.yml` to `publishers.yml` and edit appropriately.
+
+Run the crawler:
 
 ```shell
 docker compose run --rm crawler
@@ -64,5 +75,5 @@ docker compose run --rm node yarn coding-standards-apply
 ## Production deployment
 
 ```shell
-docker compose --env-file .env.docker.local --file docker-compose.server.yml --file docker-compose.override.yml up --detach --build
+docker compose --env-file .env.docker.local --file docker-compose.server.yml --file docker-compose.override.yml up --build --detach
 ```
