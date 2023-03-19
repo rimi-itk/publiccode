@@ -100,6 +100,23 @@ docker compose run --rm node yarn coding-standards-check
 docker compose run --rm node yarn coding-standards-apply
 ```
 
+## publiccode.yml
+
+This code adheres to the
+[publiccode.yml](https://github.com/publiccodeyml/publiccode.yml) standard by
+including a [`publiccode.yml`](publiccode.yml) metadata file that makes public
+software easily discoverable. See [`publiccode.yml`](publiccode.yml) for
+details.
+
+Validate the `publiccode.yml` file by running
+
+```shell
+docker run --interactive italia/publiccode-parser-go /dev/stdin < publiccode.yml
+```
+
+The validation is automatically performed by a GitHub Action whenever a pull
+request is made (cf. [`.github/workflows/pr.yaml`](.github/workflows/pr.yaml)).
+
 ## Production deployment
 
 For production we have to merge a number of ".env" files to make everything work
