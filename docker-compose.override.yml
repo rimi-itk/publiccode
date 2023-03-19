@@ -6,8 +6,9 @@ services:
 
   crawler:
     profiles: ["cli-only"]
+    # https://github.com/italia/publiccode-crawler
     image: italia/publiccode-crawler
-    command: publiccode-crawler crawl /app/"${CRAWLER_PUBLISHERS_FILE}"
+    command: publiccode-crawler crawl
     env_file:
       - ./.env
       - ./.env.local

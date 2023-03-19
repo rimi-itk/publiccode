@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Crawler\Logs;
+use App\Entity\Crawler\Publisher;
 use App\Entity\Crawler\Software;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -31,7 +32,7 @@ class CrawlerDashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToCrud('Software', 'fa fa-home', Software::class);
         yield MenuItem::linkToCrud('Logs', 'fa fa-home', Logs::class);
-        yield MenuItem::linkToRoute('Configuration', 'fa fa-home', 'crawler_configuration');
+        yield MenuItem::linkToCrud('Publishers', 'fa fa-home', Publisher::class);
         yield MenuItem::linkToRoute('Admin', 'fa fa-home', 'admin');
     }
 }

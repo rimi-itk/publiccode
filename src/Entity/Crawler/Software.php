@@ -11,12 +11,8 @@ use Symfony\Component\Yaml\Yaml;
 
 #[ORM\Entity(repositoryClass: SoftwareRepository::class, readOnly: true)]
 #[ORM\Table(name: 'software')]
-class Software
+class Software extends AbstractBaseEntity
 {
-    #[ORM\Id]
-    #[ORM\Column(name: 'id', type: UuidType::NAME)]
-    private ?Uuid $id = null;
-
     #[ORM\Column(name: 'software_url_id', type: UuidType::NAME)]
     private ?Uuid $softwareUrlId = null;
 
@@ -25,12 +21,6 @@ class Software
 
     #[ORM\Column(name: 'active')]
     private bool $active = true;
-
-    #[ORM\Column(name: 'created_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?\DateTimeImmutable $createdAt = null;
-
-    #[ORM\Column(name: 'updated_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?Uuid
     {
@@ -50,16 +40,6 @@ class Software
     public function isActive(): ?bool
     {
         return $this->active;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
     }
 
     private ?array $publiccodeData = null;
