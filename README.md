@@ -102,15 +102,19 @@ docker compose run --rm node yarn coding-standards-apply
 
 ## Production deployment
 
+For production we have to merge a number of ".env" files to make everything work
+as expected.
+
 ```shell
 # Note: This will complain about "The "CRAWLER_PUBLISHERS_FILE" variable is not set."
-docker compose --env-file .env.docker.local --file docker-compose.server.yml --file docker-compose.override.yml up --build --detach
-docker compose --env-file .env.docker.local --file docker-compose.server.yml --file docker-compose.override.yml composer install --no-dev
+cat .env .env.docker.local .env.local >| .env.tmp.local
+docker compose --env-file .env.tmp.local --file docker-compose.server.yml --file docker-compose.override.yml up --build --detach --remove-orphans
+docker compose --env-file .env.tmp.local --file docker-compose.server.yml --file docker-compose.override.yml exec phpfpm composer install --no-dev
 ```
 
 Run the crawler:
 
 ```shell
 # Note: This will complain about "The "COMPOSE_SERVER_DOMAIN" variable is not set."
-docker compose --file docker-compose.server.yml --file docker-compose.override.yml run --rm crawler
+docker compose --env-file .env.tmp.local --file docker-compose.server.yml --file docker-compose.override.yml run --rm crawler
 ```
