@@ -55,4 +55,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
-      - ./.docker/developers-italia-api-db/data:/var/lib/postgresql/data:rw
+      - developers-italia-api-db-data:/var/lib/postgresql/data:rw
+      # - ./.docker/developers-italia-api-db/data:/var/lib/postgresql/data:rw
+
+volumes:
+  developers-italia-api-db-data:

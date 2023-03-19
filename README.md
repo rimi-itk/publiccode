@@ -103,5 +103,14 @@ docker compose run --rm node yarn coding-standards-apply
 ## Production deployment
 
 ```shell
+# Note: This will complain about "The "CRAWLER_PUBLISHERS_FILE" variable is not set."
 docker compose --env-file .env.docker.local --file docker-compose.server.yml --file docker-compose.override.yml up --build --detach
+docker compose --env-file .env.docker.local --file docker-compose.server.yml --file docker-compose.override.yml composer install --no-dev
+```
+
+Run the crawler:
+
+```shell
+# Note: This will complain about "The "COMPOSE_SERVER_DOMAIN" variable is not set."
+docker compose --file docker-compose.server.yml --file docker-compose.override.yml run --rm crawler
 ```
