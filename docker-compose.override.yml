@@ -45,8 +45,6 @@ services:
       DATABASE_DSN: "host=developers-italia-api-db user=postgres password=postgres dbname=postgres port=5432"
       ENVIRONMENT: "${API_ENVIRONMENT:-local}"
       # PASETO_KEY: (set in .env.local)
-    ports:
-      - 3000
 
   developers-italia-api-db:
     image: postgres:14.3-alpine
@@ -58,5 +56,3 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - ./.docker/developers-italia-api-db/data:/var/lib/postgresql/data:rw
-    ports:
-      - 5432
