@@ -22,3 +22,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\ApiClient:
+        arguments:
+            $options:
+                api_baseurl: '%env(API_BASEURL)%'
+                api_bearer_token: '%env(API_BEARER_TOKEN)%'

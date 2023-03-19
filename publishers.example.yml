@@ -1,0 +1,18 @@
+# See https://github.com/search?q=path%3A**%2Fpubliccode.yml&type=code
+
+- name: misc
+  # Check repositories
+  repos:
+    - https://github.com/torakiki/pdfsam
+    - https://github.com/rimi-itk/publiccode
+
+- name: itk-dev
+  active: false
+  # Check all repositories in an organization
+  orgs:
+    - https://github.com/itk-dev
+
+- name: https://github.com/OS2offdig
+  active: false
+  orgs:
+    - https://github.com/OS2offdig

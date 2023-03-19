@@ -1,0 +1,63 @@
+services:
+  phpfpm:
+    build: ./.docker/phpfpm
+    depends_on:
+      - developers-italia-api-db
+
+  crawler:
+    profiles: ["cli-only"]
+    # https://github.com/italia/publiccode-crawler
+    image: italia/publiccode-crawler
+    command: publiccode-crawler crawl
+    env_file:
+      - ./.env
+      - ./.env.local
+
+    environment:
+      API_BASEURL: "http://developers-italia-api:3000/v1"
+      # API_BEARER_TOKEN: (set in .env.local)
+      CRAWLER_DATADIR: data
+    networks:
+      - app
+    depends_on:
+      - developers-italia-api
+    volumes:
+      - .:/app
+
+  node:
+    profiles: ["cli-only"]
+    image: node:18
+    networks:
+      - app
+    volumes:
+      - .:/app:delegated
+    working_dir: /app
+
+  developers-italia-api:
+    image: ghcr.io/italia/developers-italia-api:main
+    networks:
+      - app
+    depends_on:
+      - developers-italia-api-db
+    env_file:
+      - ./.env
+      - ./.env.local
+    environment:
+      DATABASE_DSN: "host=developers-italia-api-db user=postgres password=postgres dbname=postgres port=5432"
+      ENVIRONMENT: "${API_ENVIRONMENT:-local}"
+      # PASETO_KEY: (set in .env.local)
+
+  developers-italia-api-db:
+    image: postgres:14.3-alpine
+    networks:
+      - app
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      # - ./.docker/developers-italia-api-db/data:/var/lib/postgresql/data:rw
+      - developers-italia-api-db-data:/var/lib/postgresql/data:rw
+
+volumes:
+  developers-italia-api-db-data:

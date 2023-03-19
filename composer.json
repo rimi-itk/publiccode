@@ -1,4 +1,6 @@
 {
+    "name": "rimi-itk/publiccode",
+    "description": "publiccode",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
@@ -7,14 +9,26 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/doctrine-bundle": "^2.8",
+        "doctrine/doctrine-migrations-bundle": "^3.2",
+        "doctrine/orm": "^2.14",
+        "easycorp/easyadmin-bundle": "^4.6",
+        "paragonie/paseto": "^1.1",
         "symfony/console": "6.2.*",
         "symfony/dotenv": "6.2.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.2.*",
+        "symfony/http-client": "6.2.*",
         "symfony/runtime": "6.2.*",
+        "symfony/uid": "6.2.*",
         "symfony/yaml": "6.2.*"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.15",
+        "phpstan/phpstan": "^1.10",
+        "symfony/maker-bundle": "^1.48",
+        "symfony/stopwatch": "6.2.*",
+        "symfony/web-profiler-bundle": "6.2.*"
     },
     "config": {
         "allow-plugins": {
@@ -22,6 +36,7 @@
             "symfony/flex": true,
             "symfony/runtime": true
         },
+        "optimize-autoloader": true,
         "sort-packages": true
     },
     "autoload": {
@@ -53,6 +68,24 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "coding-standards-check/php-cs-fixer": [
+            "php-cs-fixer fix --dry-run"
+        ],
+        "coding-standards-check": [
+            "@coding-standards-check/php-cs-fixer"
+        ],
+        "coding-standards-apply/php-cs-fixer": [
+            "php-cs-fixer fix"
+        ],
+        "coding-standards-apply": [
+            "@coding-standards-apply/php-cs-fixer"
+        ],
+         "code-analysis/phpstan": [
+            "phpstan analyse"
+        ],
+        "code-analysis": [
+            "@code-analysis/phpstan"
         ]
     },
     "conflict": {
@@ -60,8 +93,9 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
-            "require": "6.2.*"
+            "allow-contrib": true,
+            "require": "6.2.*",
+            "docker": true
         }
     }
 }
