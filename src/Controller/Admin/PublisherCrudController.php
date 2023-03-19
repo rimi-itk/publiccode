@@ -25,7 +25,10 @@ class PublisherCrudController extends AbstractCrudController
         assert($entityInstance instanceof Publisher);
         try {
             $this->apiClient->createPublisher($entityInstance);
-            $this->addFlash('success', sprintf('Publisher %s created', $entityInstance->getAlternativeId() ?: $entityInstance->getDescription()));
+            $this->addFlash('success', sprintf(
+                'Publisher %s created',
+                $entityInstance->getAlternativeId() ?: $entityInstance->getDescription()
+            ));
         } catch (\Exception $exception) {
             $this->addFlash('danger', $exception->getMessage());
         }
@@ -36,7 +39,10 @@ class PublisherCrudController extends AbstractCrudController
         assert($entityInstance instanceof Publisher);
         try {
             $this->apiClient->updatePublisher($entityInstance);
-            $this->addFlash('success', sprintf('Publisher %s updated', $entityInstance->getAlternativeId() ?: $entityInstance->getDescription()));
+            $this->addFlash('success', sprintf(
+                'Publisher %s updated',
+                $entityInstance->getAlternativeId() ?: $entityInstance->getDescription()
+            ));
         } catch (\Exception $exception) {
             $this->addFlash('danger', $exception->getMessage());
         }
@@ -47,7 +53,10 @@ class PublisherCrudController extends AbstractCrudController
         assert($entityInstance instanceof Publisher);
         try {
             $this->apiClient->deletePublisher($entityInstance);
-            $this->addFlash('success', sprintf('Publisher %s deleted', $entityInstance->getAlternativeId() ?: $entityInstance->getDescription()));
+            $this->addFlash('success', sprintf(
+                'Publisher %s deleted',
+                $entityInstance->getAlternativeId() ?: $entityInstance->getDescription()
+            ));
         } catch (\Exception $exception) {
             $this->addFlash('danger', $exception->getMessage());
         }
@@ -61,7 +70,7 @@ class PublisherCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-//            ->disable(Action::NEW, Action::EDIT, Action::DELETE)
+            ->disable(Action::DELETE)
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
         ;
     }

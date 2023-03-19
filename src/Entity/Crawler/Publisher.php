@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Valid;
 
 #[ORM\Entity(repositoryClass: PublisherRepository::class, readOnly: true)]
 #[ORM\Table(name: 'publishers')]
@@ -22,12 +23,13 @@ class Publisher extends AbstractBaseEntity implements \JsonSerializable
     private string $description;
 
     #[ORM\Column(name: 'active', type: Types::BOOLEAN)]
-    private bool $active;
+    private bool $active = true;
 
     #[ORM\Column(name: 'alternative_id', type: Types::TEXT, nullable: true)]
     private ?string $alternativeId = null;
 
     #[ORM\OneToMany(mappedBy: 'publisher', targetEntity: PublisherCodeHosting::class)]
+    #[Valid]
     #[Count(min: 1)]
     private Collection $codeHosting;
 

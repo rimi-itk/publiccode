@@ -11,16 +11,16 @@ use Doctrine\ORM\Mapping as ORM;
 class Logs extends AbstractBaseEntity
 {
     #[ORM\Column(name: 'message', type: Types::TEXT)]
-    private string $message;
+    private string $message = '';
 
     #[ORM\Column(name: 'entity_id', type: Types::TEXT, nullable: true)]
-    private ?string $entityId;
+    private ?string $entityId = null;
 
     #[ORM\Column(name: 'entity_type', type: Types::TEXT, nullable: true)]
-    private ?string $entityType;
+    private ?string $entityType = null;
 
     #[ORM\Column(name: 'entity', type: Types::TEXT, nullable: true)]
-    private ?string $entity;
+    private ?string $entity = null;
 
     #[ORM\Column(name: 'deleted_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $deletedAt = null;

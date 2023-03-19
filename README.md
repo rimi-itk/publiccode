@@ -5,7 +5,7 @@ docker compose pull
 docker compose up --build --detach
 docker compose exec phpfpm composer install
 
-open "http://$(docker compose port nginx 8080)/admin"
+open "http://$(docker compose port nginx 8080)/crawler"
 ```
 
 Create and edit `.env.local` and set your GitHub API token:
@@ -23,9 +23,24 @@ Generate a couple of required environment variables, `API_BEARER_TOKEN` and
 docker compose exec phpfpm bin/console app:paseto
 ```
 
-and insert the variables into `.env.local`.
+inserting the variables into `.env.local` and restarting the docker compose
+services:
 
-Copy `publishers.dist.yml` to `publishers.yml` and edit appropriately.
+```shell
+docker compose restart
+```
+
+Create some publishers manually using the Crawler UI or importing from a file with
+
+```shell
+docker compose exec phpfpm bin/console app:crawler:publisher-import
+```
+
+The example file [`publishers.example.yml`](publishers.example.yml) can be imported by running
+
+```shell
+docker compose exec phpfpm bin/console app:crawler:publisher-import publishers.example.yml
+```
 
 Run the crawler:
 

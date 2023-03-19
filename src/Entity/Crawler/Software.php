@@ -22,11 +22,6 @@ class Software extends AbstractBaseEntity
     #[ORM\Column(name: 'active')]
     private bool $active = true;
 
-    public function getId(): ?Uuid
-    {
-        return $this->id;
-    }
-
     public function getSoftwareUrlId(): ?Uuid
     {
         return $this->softwareUrlId;

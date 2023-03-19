@@ -5,6 +5,7 @@ namespace App\Entity\Crawler;
 use App\Repository\PublisherCodeHostingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Url;
 
 #[ORM\Entity(repositoryClass: PublisherCodeHostingRepository::class)]
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Constraints\Url;
 class PublisherCodeHosting extends AbstractBaseEntity implements \JsonSerializable
 {
     #[ORM\Column(name: 'url', type: Types::TEXT)]
+    #[NotBlank]
     #[Url]
     private ?string $url = null;
 
@@ -24,7 +26,7 @@ class PublisherCodeHosting extends AbstractBaseEntity implements \JsonSerializab
 
     public function __toString(): string
     {
-        return $this->url;
+        return $this->url ?? '';
     }
 
     /**

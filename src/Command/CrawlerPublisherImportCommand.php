@@ -53,6 +53,7 @@ class CrawlerPublisherImportCommand extends Command
             foreach ($data as $datum) {
                 $publisher = (new Publisher())
                     ->setDescription($datum['name'] ?? $datum['description'] ?? '')
+                    ->setActive((bool)($datum['active'] ?? true))
                     ->setAlternativeId($datum['id'] ?? null);
                 if (isset($datum['repos'])) {
                     foreach ($datum['repos'] as $url) {

@@ -75,7 +75,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: php-coding-standards-check
+      - name: php-code-analysis
         run: |
           docker network create frontend
           touch .env.local

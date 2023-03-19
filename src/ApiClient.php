@@ -19,7 +19,7 @@ class ApiClient
 
     public function readPublisher(Uuid $id)
     {
-        return $this->get('publishers/' . $id)->toArray();
+        return $this->get('publishers/'.$id)->toArray();
     }
 
     public function createPublisher(Publisher $publisher)
@@ -31,14 +31,14 @@ class ApiClient
 
     public function updatePublisher(Publisher $publisher)
     {
-        return $this->patch('publishers/' . $publisher->getId(), [
+        return $this->patch('publishers/'.$publisher->getId(), [
             'json' => $publisher,
         ]);
     }
 
     public function deletePublisher(Publisher $publisher)
     {
-        return $this->delete('publishers/' . $publisher->getId());
+        return $this->delete('publishers/'.$publisher->getId());
     }
 
     public function getPublishers(array $query = []): array
@@ -46,11 +46,9 @@ class ApiClient
         return $this->get('publishers', ['query' => $query])->toArray();
     }
 
-    private function get(string $path, array $query): ResponseInterface
+    private function get(string $path, array $options = []): ResponseInterface
     {
-        return $this->httpClient->request('GET', $path, [
-            'base_uri' => $this->options['api_baseurl'],
-        ]);
+        return $this->request('GET', $path, $options);
     }
 
     private function post(string $url, array $options): ResponseInterface
@@ -76,8 +74,8 @@ class ApiClient
             [
                 'base_uri' => $this->options['api_baseurl'],
                 'headers' => [
-                    'Accept: */*',
-                    'Authorization: Bearer ' . $this->options['api_bearer_token'],
+                    'Accept' => '*/*',
+                    'Authorization' => 'Bearer '.$this->options['api_bearer_token'],
                 ],
             ] + $options
         );
