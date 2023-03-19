@@ -1,4 +1,6 @@
 {
+    "name": "rimi-itk/publiccode",
+    "description": "publiccode",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",

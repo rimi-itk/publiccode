@@ -26,13 +26,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Composer install
+      - name: Initialize
         run: |
           docker network create frontend
+          touch .env.local
+          docker compose up --build --detach
+      - name: Composer install
+        run: |
           docker compose exec phpfpm composer install
       - name: Composer install (--no-dev)
         run: |
-          docker compose exec phpfpm composer install --no-dev
+          docker compose exec --env APP_ENV=prod phpfpm composer install --no-dev
 
   php-coding-standards:
     runs-on: ubuntu-latest
@@ -45,6 +49,8 @@ jobs:
       - name: php-coding-standards-check
         run: |
           docker network create frontend
+          touch .env.local
+          docker compose up --build --detach
           docker compose exec phpfpm composer install --no-interaction
           docker compose exec phpfpm composer coding-standards-check
 
@@ -59,6 +65,8 @@ jobs:
       - name: php-coding-standards-check
         run: |
           docker network create frontend
+          touch .env.local
+          docker compose up --build --detach
           docker compose exec phpfpm composer install --no-interaction
           docker compose exec phpfpm composer code-analysis
 
@@ -71,5 +79,6 @@ jobs:
       - name: markdown-coding-standards-check
         run: |
           docker network create frontend
+          touch .env.local
           docker compose run --rm node yarn install --no-interaction
           docker compose run --rm node yarn coding-standards-check

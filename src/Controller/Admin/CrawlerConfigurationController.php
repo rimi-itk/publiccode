@@ -35,7 +35,8 @@ class CrawlerConfigurationController extends AbstractController
             ->setAllowedTypes('crawler_publishers_file', 'string')
             ->setAllowedValues('crawler_publishers_file', static function ($value) {
                 if (!file_exists($value)) {
-                    throw new InvalidOptionsException(sprintf('Option crawler_publishers_file must be a valid file path. %s given.', $value));
+                    $message = sprintf('Option crawler_publishers_file must be a valid file path. %s given.', $value);
+                    throw new InvalidOptionsException($message);
                 }
 
                 return true;

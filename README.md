@@ -16,7 +16,7 @@ Create and edit `.env.local` and set your GitHub API token:
 GITHUB_TOKEN=""
 ```
 
-Generate a couple of required environment variables, `API_BEARER_TOKEN, and
+Generate a couple of required environment variables, `API_BEARER_TOKEN` and
 `PASETO_KEY`, by running
 
 ```shell
